@@ -1,3 +1,4 @@
+import { filter } from '@laufire/utils/collection';
 import { rndString } from '@laufire/utils/random';
 
 const TodoManager = {
@@ -7,6 +8,8 @@ const TodoManager = {
 				todo: input,
 				completed: false }],
 
+	removeTodo: ({ state: { todoList }, data: { id }}) =>
+		filter(todoList, (element) => element.id !== id),
 };
 
 export default TodoManager;

@@ -2,13 +2,13 @@ import { React } from 'react';
 import './App.scss';
 import AddButton from './component/todo/AddButton';
 import TodoInput from './component/todo/TodoInput';
-import DisplayTodo from './component/todo/DisplayTodo';
+import TodoList from './component/todo/TodoList';
 
 const App = (context) =>
 	<div className="App" role="App">
 		<TodoInput { ...context }/>
 		<AddButton { ...context }/>
-		<DisplayTodo { ...context }/>
+		<TodoList { ...context }/>
 	</div>;
 
 export default App;
