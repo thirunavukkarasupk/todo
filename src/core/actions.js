@@ -1,10 +1,13 @@
+import TodoManager from '../services/TodoManager';
+
 const setInput = ({ data }) => ({
 	input: data,
 });
 
-const addTodo = ({ state: { input, todoList }}) => ({
-	todoList: [...todoList, input],
-});
+const addTodo = (context) =>
+	({
+		todoList: TodoManager.addTodo(context),
+	});
 
 const actions = {
 	setInput,
