@@ -9,7 +9,15 @@ const TodoManager = {
 				completed: false }],
 
 	removeTodo: ({ state: { todoList }, data: { id }}) =>
-		filter(todoList, (element) => element.id !== id),
+		filter(todoList, (todo) => todo.id !== id),
+
+	toggleTodo: ({ state: { todoList }, data: { id, completed }}) =>
+		todoList.map((todo) => (todo.id !== id
+			? todo
+			: {
+				...todo,
+				completed: !completed,
+			})),
 };
 
 export default TodoManager;

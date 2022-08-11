@@ -14,10 +14,15 @@ const removeTodo = (context) =>
 		todoList: TodoManager.removeTodo(context),
 	});
 
+const toggleTodo = (context) => ({
+	todoList: TodoManager.toggleTodo(context),
+});
+
 const actions = {
 	setInput,
 	addTodo,
 	removeTodo,
+	toggleTodo,
 };
 
 export default actions;
