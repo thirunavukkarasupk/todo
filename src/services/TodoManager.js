@@ -12,12 +12,22 @@ const TodoManager = {
 		filter(todoList, (todo) => todo.id !== id),
 
 	toggleTodo: ({ state: { todoList }, data: { id, completed }}) =>
-		todoList.map((todo) => (todo.id !== id
-			? todo
-			: {
+		todoList.map((todo) => (todo.id === id
+			? {
 				...todo,
 				completed: !completed,
-			})),
+			}
+			: todo)),
+
+	toggleAll: ({ state: { todoList }, data }) =>
+		todoList.map((todo) => ({
+			...todo,
+			completed: data,
+		})),
+
+	isChecked: ({ state: { todoList }}) =>
+		todoList.filter((todo) => !todo.completed)
+			.length === 0 && todoList.length !== 0,
 };
 
 export default TodoManager;

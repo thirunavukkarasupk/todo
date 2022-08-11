@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AddButton = (context) =>
+const AddButton = ({ actions, state: { input }}) =>
 	<button
-		onClick={ () => context.actions.addTodo(context) }
+		onClick={ () => actions.addTodo(input) }
 	>Add</button>;
 
 export default AddButton;

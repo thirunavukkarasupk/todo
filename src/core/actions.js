@@ -18,11 +18,16 @@ const toggleTodo = (context) => ({
 	todoList: TodoManager.toggleTodo(context),
 });
 
+const toggleAll = (context) => ({
+	todoList: TodoManager.toggleAll(context),
+});
+
 const actions = {
 	setInput,
 	addTodo,
 	removeTodo,
 	toggleTodo,
+	toggleAll,
 };
 
 export default actions;
