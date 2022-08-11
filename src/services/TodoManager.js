@@ -28,6 +28,9 @@ const TodoManager = {
 	isChecked: ({ state: { todoList }}) =>
 		todoList.filter((todo) => !todo.completed)
 			.length === 0 && todoList.length !== 0,
+
+	clearButton: ({ state: { todoList }}) =>
+		todoList.filter((todo) => !todo.completed),
 };
 
 export default TodoManager;
