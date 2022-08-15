@@ -2,9 +2,9 @@ import React from 'react';
 import FilterButton from './FilterButton';
 
 const FilterBar = (context) => {
-	const { config: { Filters }} = context;
+	const { config: { filters }} = context;
 
-	return Filters.map((filter) => <span key={ filter }>
+	return filters.map((filter) => <span key={ filter }>
 		<FilterButton { ...{ ...context, data: filter } }/>
 	</span>);
 } ;
