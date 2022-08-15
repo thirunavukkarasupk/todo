@@ -5,14 +5,14 @@ import TodoManager from '../../services/TodoManager';
 
 const ToggleAll = (context) => {
 	const { actions, state: { todoList }} = context;
-	const isChecked = TodoManager.getCountOfActiveTask(todoList) === 0;
+	const isAllChecked = TodoManager.getCountOfActiveTask(todoList) === 0;
 	const noTodoList = TodoManager.getCountOfTodoList(todoList) === 0;
 
 	return !noTodoList
 		&& <input
 			type="checkbox"
-			checked={ isChecked }
-			onChange={ () => actions.toggleAll(!isChecked) }
+			checked={ isAllChecked }
+			onChange={ () => actions.toggleAll(!isAllChecked) }
 		   />
 	;
 };

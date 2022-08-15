@@ -25,6 +25,10 @@ const toggleAll = (context) => ({
 const clearButton = (context) => ({
 	todoList: TodoManager.clearButton(context),
 });
+const filterButton = ({ data: filter }) => ({
+	filter,
+
+});
 
 const actions = {
 	setInput,
@@ -33,6 +37,7 @@ const actions = {
 	toggleTodo,
 	toggleAll,
 	clearButton,
+	filterButton,
 };
 
 export default actions;

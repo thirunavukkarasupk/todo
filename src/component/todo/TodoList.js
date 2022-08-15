@@ -1,10 +1,15 @@
 
 import React from 'react';
 import Todo from './Todo';
+import TodoManager from '../../services/TodoManager';
 
-const TodoList = (context) =>
-	context.state.todoList.map((todo) => <div key={ todo.id }>
+const TodoList = (context) => {
+	const { state: { todoList, filter }} = context;
+	const filteredTodos = TodoManager.filterTodos(todoList, filter);
+
+	return filteredTodos.map((todo) => <div key={ todo.id }>
 		<Todo { ...{ ...context, data: todo } }/>
 	</div>);
+};
 
 export default TodoList;
