@@ -1,13 +1,13 @@
 import React from 'react';
+import TodoManager from '../../services/TodoManager';
 
 const EditButton = (context) => {
-	const { state, actions } = context;
-	const { editing } = state;
+	const { actions, state: { editing }} = context;
 
 	return (
 		<button
-			disabled={ editing === null }
-			onClick={ () => actions.editTodo(state) }
+			disabled={ TodoManager.isEditingNull(editing) }
+			onClick={ () => actions.editTodo() }
 		>Edit</button>);
 };
 

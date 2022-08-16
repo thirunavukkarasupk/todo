@@ -49,6 +49,8 @@ const TodoManager = {
 		todoList.map((todo) => (todo.id === editing.id
 			? { ...todo, todo: input }
 			: todo)),
+
+	isEditingNull: (editing) => editing === null,
 };
 
 export default TodoManager;
