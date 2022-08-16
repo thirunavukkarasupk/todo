@@ -1,15 +1,16 @@
-
 import React from 'react';
 import RemoveButton from './RemoveButton';
 import CheckBox from './CheckBox';
 
 const Todo = (context) => {
-	const { data } = context;
+	const { data, actions } = context;
 	const { todo, id } = data;
 
 	return <div key={ id }>
 		<CheckBox { ...context }/>
-		<span>{todo}</span>
+		<span
+			onClick={ () => actions.setEditing(data) }
+		>{todo}</span>
 		<RemoveButton { ...context }/>
 	</div>;
 };

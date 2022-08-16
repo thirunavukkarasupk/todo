@@ -6,6 +6,7 @@ const seed = {
 		{ id: 'dddd', todo: 'abcd', completed: false },
 		{ id: 'eeee', todo: 'abcde', completed: false }],
 	filter: 'all',
+	editing: null,
 };
 
 export default seed;

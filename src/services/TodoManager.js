@@ -42,6 +42,13 @@ const TodoManager = {
 		todoList.some((todo) => todo),
 
 	filterTodos: (todoList, Filter) => todoList.filter(filters[Filter]),
+
+	editTodo: (
+		todoList, input, editing
+	) =>
+		todoList.map((todo) => (todo.id === editing.id
+			? { ...todo, todo: input }
+			: todo)),
 };
 
 export default TodoManager;

@@ -29,6 +29,18 @@ const filterButton = ({ data: filter }) => ({
 	filter,
 
 });
+const setEditing = ({ data }) => ({
+	input: data.todo,
+	editing: data,
+});
+
+const editTodo = ({ state: { todoList, input, editing }}) => ({
+	input: '',
+	editing: null,
+	todoList: TodoManager.editTodo(
+		todoList, input, editing
+	),
+});
 
 const actions = {
 	setInput,
@@ -38,6 +50,8 @@ const actions = {
 	toggleAll,
 	clearButton,
 	filterButton,
+	setEditing,
+	editTodo,
 };
 
 export default actions;
