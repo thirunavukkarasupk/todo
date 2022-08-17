@@ -42,6 +42,10 @@ const editTodo = ({ state: { todoList, input, editing }}) => ({
 	),
 });
 
+const setTask = ({ data }) => ({
+	taskList: data,
+});
+
 const actions = {
 	setInput,
 	addTodo,
@@ -52,6 +56,7 @@ const actions = {
 	filterButton,
 	setEditing,
 	editTodo,
+	setTask,
 };
 
 export default actions;
