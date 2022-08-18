@@ -11,6 +11,9 @@ const TaskManager = {
 		actions.setTask(taskList.map((task) =>
 			TaskManager.getTask(idLength, task))),
 
+	removeTask: ({ state: { taskList }, data: { id }}) =>
+		taskList.filter((task) => task.id !== id),
+
 };
 
 export default TaskManager;
