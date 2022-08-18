@@ -4,7 +4,15 @@
 	button {
 		font-weight: bold;
 	}
-}
-.Container{
+
+.left{
+	width:50%;
+	float:left;
 	display:flex;
+}
+
+.right{
+	margin-left:50%;
+	display:flex;
+}
 }

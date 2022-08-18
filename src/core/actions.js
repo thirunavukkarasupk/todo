@@ -51,6 +51,10 @@ const removeTask = (context) => ({
 	taskList: TaskManager.removeTask(context),
 });
 
+const addTaskToTodo = (context) => ({
+	todoList: TodoManager.addTaskToTodo(context),
+});
+
 const actions = {
 	setInput,
 	addTodo,
@@ -63,6 +67,7 @@ const actions = {
 	editTodo,
 	setTask,
 	removeTask,
+	addTaskToTodo,
 };
 
 export default actions;

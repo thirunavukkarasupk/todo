@@ -51,6 +51,12 @@ const TodoManager = {
 			: todo)),
 
 	isEditingNull: (editing) => editing === null,
+
+	addTaskToTodo: ({ state: { todoList }, data }) =>
+		[...todoList,
+			{ id: data.id,
+				todo: data.task,
+				completed: false }],
 };
 
 export default TodoManager;
