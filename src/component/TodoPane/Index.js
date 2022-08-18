@@ -8,6 +8,7 @@ import ActionButton from './ActionButton';
 
 const TodoPane = (context) =>
 	<div>
+		<h4>TODO PANE</h4>
 		<ToggleAll { ...context }/>
 		<TodoInput { ...context }/>
 		<ActionButton { ...context }/>

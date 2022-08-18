@@ -7,12 +7,9 @@ const TaskManager = {
 		task: text,
 	}),
 
-	init: ({ actions, config: { idLength }}) =>
-		actions.setTask([
-			TaskManager.getTask(idLength, 'task1'),
-			TaskManager.getTask(idLength, 'task2'),
-			TaskManager.getTask(idLength, 'task3'),
-		]),
+	init: ({ actions, config: { idLength, taskList }}) =>
+		actions.setTask(taskList.map((task) =>
+			TaskManager.getTask(idLength, task))),
 
 };
 

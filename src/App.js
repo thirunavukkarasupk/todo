@@ -8,8 +8,10 @@ const App = (context) => {
 	useEffect(() => TaskManager.init(context), []);
 
 	return <div className="App" role="App">
-		<TodoPane { ...context }/>
-		<TaskPane { ...context }/>
+		<div className="Container">
+			<TodoPane { ...context }/>
+			<TaskPane { ...context }/>
+		</div>
 	</div>;
 }
 ;

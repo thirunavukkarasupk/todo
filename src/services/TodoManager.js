@@ -39,7 +39,7 @@ const TodoManager = {
 		todoList.filter((todo) => !todo.completed),
 
 	getCompletedTodo: (todoList) =>
-		todoList.some((todo) => todo),
+		todoList.filter((todo) => todo.completed),
 
 	filterTodos: (todoList, Filter) => todoList.filter(filters[Filter]),
 
