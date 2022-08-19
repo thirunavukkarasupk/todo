@@ -43,16 +43,16 @@ const editTodo = ({ state: { todoList, input, editing }}) => ({
 	),
 });
 
-const setTask = ({ data }) => ({
-	taskList: data,
-});
-
 const removeTask = (context) => ({
 	taskList: TaskManager.removeTask(context),
 });
 
 const addTaskToTodo = (context) => ({
 	todoList: TodoManager.addTaskToTodo(context),
+});
+
+const addTask = (context) => ({
+	taskList: TaskManager.addTask(context),
 });
 
 const actions = {
@@ -65,9 +65,9 @@ const actions = {
 	filterButton,
 	setEditing,
 	editTodo,
-	setTask,
 	removeTask,
 	addTaskToTodo,
+	addTask,
 };
 
 export default actions;

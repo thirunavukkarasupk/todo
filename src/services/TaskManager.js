@@ -7,13 +7,17 @@ const TaskManager = {
 		task: text,
 	}),
 
-	init: ({ actions, config: { idLength, taskList }}) =>
-		actions.setTask(taskList.map((task) =>
-			TaskManager.getTask(idLength, task))),
+	init: ({ actions, config: { taskList }}) =>
+		taskList.map((task) => actions.addTask(task)),
 
 	removeTask: ({ state: { taskList }, data: { id }}) =>
 		taskList.filter((task) => task.id !== id),
 
+	addTask: ({ state: { taskList }, config: { idLength, max },
+		data: text }) =>
+		(taskList.length <= max
+			? [...taskList, TaskManager.getTask(idLength, text)]
+			: taskList),
 };
 
 export default TaskManager;

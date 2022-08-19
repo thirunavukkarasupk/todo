@@ -4,9 +4,8 @@ import Task from './Task';
 const TaskList = (context) => {
 	const { state: { taskList }} = context;
 
-	return taskList.map((task) => <div key={ task.id }>
-		<Task { ...{ ...context, data: task } }/>
-	</div>);
+	return taskList.map((task) =>
+		<Task key={ task.id }{ ...{ ...context, data: task } }/>);
 };
 
 export default TaskList;
