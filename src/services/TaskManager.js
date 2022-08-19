@@ -13,9 +13,9 @@ const TaskManager = {
 	removeTask: ({ state: { taskList }, data: { id }}) =>
 		taskList.filter((task) => task.id !== id),
 
-	addTask: ({ state: { taskList }, config: { idLength, max },
+	addTask: ({ state: { taskList }, config: { idLength, taskMax },
 		data: text }) =>
-		(taskList.length <= max
+		(taskList.length < taskMax
 			? [...taskList, TaskManager.getTask(idLength, text)]
 			: taskList),
 };

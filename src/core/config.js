@@ -4,9 +4,9 @@ const seconds = 3;
 const config = {
 	idLength: 4,
 	filters: ['all', 'active', 'completed'],
-	taskList: ['task1', 'task2', 'task3'],
+	taskList: ['Debug the code', 'Write the code', 'Clean up'],
 	tickerDelay: milliSeconds * seconds,
-	max: 5,
+	taskMax: 8,
 };
 
 export default config;
