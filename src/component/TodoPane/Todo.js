@@ -4,9 +4,9 @@ import CheckBox from './CheckBox';
 
 const Todo = (context) => {
 	const { data, actions } = context;
-	const { todo } = data;
+	const { todo, completed } = data;
 
-	return <div>
+	return <div className={ completed ? 'todo-completed' : 'todo-active' }>
 		<CheckBox { ...context }/>
 		<span
 			onClick={ () => actions.setEditing(data) }
