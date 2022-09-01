@@ -8,7 +8,9 @@ describe('todoManager', () => {
 		toggleAll,
 		getCountOfActiveTask,
 		getCountOfTodoList,
+		clearButton,
 	} = TodoManager;
+
 	const todoList = [{
 		id: 'DDYB',
 		todo: 'Test The Code',
@@ -106,5 +108,15 @@ describe('todoManager', () => {
 		const result = getCountOfTodoList(todoList);
 
 		expect(result).toEqual(Number('2'));
+	});
+
+	test('clear the completed todo from the todoList', () => {
+		const context = {
+			state: { todoList },
+		};
+
+		const result = clearButton(context);
+
+		expect(result).toEqual([todoList[0]]);
 	});
 });
