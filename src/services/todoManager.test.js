@@ -9,6 +9,7 @@ describe('todoManager', () => {
 		getCountOfActiveTask,
 		getCountOfTodoList,
 		clearButton,
+		getCompletedTodo,
 	} = TodoManager;
 
 	const todoList = [{
@@ -118,5 +119,11 @@ describe('todoManager', () => {
 		const result = clearButton(context);
 
 		expect(result).toEqual([todoList[0]]);
+	});
+
+	test('all the completed todos in the todoList', () => {
+		const result = getCompletedTodo(todoList);
+
+		expect(result).toEqual([todoList[1]]);
 	});
 });
