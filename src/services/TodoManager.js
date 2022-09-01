@@ -41,8 +41,8 @@ const TodoManager = {
 		completed: (todo) => todo.completed,
 	},
 
-	filterTodos: (todoList, Filter) =>
-		todoList.filter(TodoManager.filters[Filter]),
+	filterTodos: (todoList, filter) =>
+		todoList.filter(TodoManager.filters[filter]),
 
 	editTodo: (
 		todoList, input, editing
