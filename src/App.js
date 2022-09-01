@@ -11,8 +11,8 @@ const App = (context) => {
 	useEffect(() => Ticker.start(context), []);
 
 	return <div className="App" role="App">
-		<div><TodoPane { ...context }/></div>
-		<div><TaskPane { ...context }/></div>
+		<TodoPane { ...context }/>
+		<TaskPane { ...context }/>
 	</div>;
 }
 ;

@@ -8,6 +8,7 @@ const ClearButton = (context) => {
 
 	return CompletedTodo
 		&& <button
+			className="clearButton"
 			onClick={ () => actions.clearButton(todoList) }
 		   >ClearCompletedTasks
 		</button>;

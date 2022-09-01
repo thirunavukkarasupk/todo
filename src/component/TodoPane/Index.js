@@ -7,7 +7,7 @@ import FilterBar from './FilterBar';
 import ActionButton from './ActionButton';
 
 const TodoPane = (context) =>
-	<div>
+	<div className="todoPane">
 		<h4>TODO PANE</h4>
 		<ToggleAll { ...context }/>
 		<TodoInput { ...context }/>
