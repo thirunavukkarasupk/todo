@@ -12,6 +12,9 @@ describe('todoManager', () => {
 		getCompletedTodo,
 		filters,
 		filterTodos,
+		editTodo,
+		isEditingNull,
+		addTaskToTodo,
 	} = TodoManager;
 
 	const todoList = [{
@@ -186,5 +189,51 @@ describe('todoManager', () => {
 
 			expect(result).toEqual([todoList[1]]);
 		});
+	});
+
+	test('when the editing has value', () => {
+		const editing = todoList[0];
+		const input = 'Tested The Code';
+		const result = editTodo(
+			todoList, input, editing
+		);
+
+		expect(result)
+			.toEqual([{ ...todoList[0], todo: input }, todoList[1]]);
+	});
+
+	describe('is editing null', () => {
+		test('when editing is null', () => {
+			const editing = null;
+			const result = isEditingNull(editing);
+
+			expect(result).toEqual(true);
+		});
+
+		test('when editing is not Null', () => {
+			const editing = todoList[0];
+			const result = isEditingNull(editing);
+
+			expect(result).toEqual(false);
+		});
+	});
+
+	test('add todo from task ', () => {
+		const context = {
+			state: { todoList },
+			data: {
+				id: 'KDNP',
+				task: 'Increase The Bandwidth',
+			},
+		};
+		const result = addTaskToTodo(context);
+
+		expect(result)
+			.toEqual([...context.state.todoList,
+				{
+					id: context.data.id,
+					todo: context.data.task,
+					completed: false,
+				}]);
 	});
 });
