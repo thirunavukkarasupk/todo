@@ -1,7 +1,7 @@
 import TodoManager from './TodoManager';
 
 describe('todoManager', () => {
-	const { addTodo } = TodoManager;
+	const { addTodo, removeTodo } = TodoManager;
 
 	test('add todo to the todoList', () => {
 		const context = {
@@ -20,5 +20,22 @@ describe('todoManager', () => {
 		const result = addTodo(context);
 
 		expect(result).toEqual([newTodo]);
+	});
+
+	test('remove the todo from the todoList', () => {
+		const context = {
+			state: {
+				todoList: [{
+					id: 'DDYB',
+					todo: 'Test The Code',
+					completed: false,
+				}],
+			},
+			data: { id: 'DDYB' },
+		};
+
+		const result = removeTodo(context);
+
+		expect(result).toEqual([]);
 	});
 });
