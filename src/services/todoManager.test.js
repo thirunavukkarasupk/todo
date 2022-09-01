@@ -1,7 +1,12 @@
 import TodoManager from './TodoManager';
 
 describe('todoManager', () => {
-	const { addTodo, removeTodo, toggleTodo } = TodoManager;
+	const {
+		addTodo,
+		removeTodo,
+		toggleTodo,
+		toggleAll,
+	} = TodoManager;
 	const todoList = [{
 		id: 'DDYB',
 		todo: 'Test The Code',
@@ -55,5 +60,37 @@ describe('todoManager', () => {
 
 		expect(result)
 			.toEqual([{ ...todoList[0], completed: true }, todoList[1]]);
+	});
+
+	describe('toggle all the todos', () => {
+		test('when all the todos are not completed', () => {
+			const context = {
+				state: {
+					todoList,
+				},
+				data: true,
+			};
+
+			const result = toggleAll(context);
+
+			expect(result)
+				.toEqual([{ ...todoList[0], completed: true },
+					{ ...todoList[1], completed: true }]);
+		});
+
+		test('when all the todos are completed', () => {
+			const context = {
+				state: {
+					todoList,
+				},
+				data: false,
+			};
+
+			const result = toggleAll(context);
+
+			expect(result)
+				.toEqual([{ ...todoList[0], completed: false },
+					{ ...todoList[1], completed: false }]);
+		});
 	});
 });
