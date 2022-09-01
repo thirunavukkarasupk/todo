@@ -11,6 +11,7 @@ describe('todoManager', () => {
 		clearButton,
 		getCompletedTodo,
 		filters,
+		filterTodos,
 	} = TodoManager;
 
 	const todoList = [{
@@ -161,6 +162,29 @@ describe('todoManager', () => {
 			const result = filters.completed(todo);
 
 			expect(result).toEqual(true);
+		});
+	});
+
+	describe('filter Todos from the TodoList', () => {
+		test('when all is clicked', () => {
+			const filter = 'all';
+			const result = filterTodos(todoList, filter);
+
+			expect(result).toEqual(todoList);
+		});
+
+		test('when active is clicked', () => {
+			const filter = 'active';
+			const result = filterTodos(todoList, filter);
+
+			expect(result).toEqual([todoList[0]]);
+		});
+
+		test('when completed is clicked', () => {
+			const filter = 'completed';
+			const result = filterTodos(todoList, filter);
+
+			expect(result).toEqual([todoList[1]]);
 		});
 	});
 });
