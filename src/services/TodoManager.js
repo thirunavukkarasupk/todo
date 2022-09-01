@@ -1,11 +1,5 @@
 import { rndString } from '@laufire/utils/random';
 
-const filters = {
-	all: () => true,
-	active: (todo) => !todo.completed,
-	completed: (todo) => todo.completed,
-};
-
 const TodoManager = {
 	addTodo: ({ config: { idLength }, state: { input, todoList }}) =>
 		[...todoList,
@@ -41,7 +35,14 @@ const TodoManager = {
 	getCompletedTodo: (todoList) =>
 		todoList.filter((todo) => todo.completed),
 
-	filterTodos: (todoList, Filter) => todoList.filter(filters[Filter]),
+	filters: {
+		all: () => true,
+		active: (todo) => !todo.completed,
+		completed: (todo) => todo.completed,
+	},
+
+	filterTodos: (todoList, Filter) =>
+		todoList.filter(TodoManager.filters[Filter]),
 
 	editTodo: (
 		todoList, input, editing
