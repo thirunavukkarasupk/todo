@@ -6,6 +6,8 @@ describe('todoManager', () => {
 		removeTodo,
 		toggleTodo,
 		toggleAll,
+		getCountOfActiveTask,
+		getCountOfTodoList,
 	} = TodoManager;
 	const todoList = [{
 		id: 'DDYB',
@@ -92,5 +94,17 @@ describe('todoManager', () => {
 				.toEqual([{ ...todoList[0], completed: false },
 					{ ...todoList[1], completed: false }]);
 		});
+	});
+
+	test('count of the active todos in the todoList', () => {
+		const result = getCountOfActiveTask(todoList);
+
+		expect(result).toEqual(1);
+	});
+
+	test('count of the todos in the todoList', () => {
+		const result = getCountOfTodoList(todoList);
+
+		expect(result).toEqual(Number('2'));
 	});
 });
