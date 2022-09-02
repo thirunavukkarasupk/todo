@@ -25,6 +25,10 @@ describe('taskManager', () => {
 		});
 	});
 
+	test('init', () => {
+
+	});
+
 	test('remove task from the list', () => {
 		const context = { state: { taskList }, data: { id: 'XYZG' }};
 
