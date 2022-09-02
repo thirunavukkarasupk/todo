@@ -4,7 +4,13 @@ describe('taskManager', () => {
 	const
 		{
 			getTask,
+			removeTask,
 		} = TaskManager;
+
+	const taskList = [
+		{ id: 'XYZG', task: 'Debug The Code' },
+		{ id: 'KLMN', task: 'Clear The Code' },
+	];
 
 	test('get task', () => {
 		const idLength = 4;
@@ -16,5 +22,13 @@ describe('taskManager', () => {
 			id: expect.any(String),
 			task: text,
 		});
+	});
+
+	test('remove task from the list', () => {
+		const context = { state: { taskList }, data: { id: 'XYZG' }};
+
+		const result = removeTask(context);
+
+		expect(result).toEqual([taskList[1]]);
 	});
 });
