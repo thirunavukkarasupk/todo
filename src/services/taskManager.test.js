@@ -5,6 +5,7 @@ describe('taskManager', () => {
 		{
 			getTask,
 			removeTask,
+			addTask,
 		} = TaskManager;
 
 	const taskList = [
@@ -30,5 +31,20 @@ describe('taskManager', () => {
 		const result = removeTask(context);
 
 		expect(result).toEqual([taskList[1]]);
+	});
+
+	test('adding task to the taskList', () => {
+		const context = {
+			state: { taskList },
+			config: { idLength: 4, taskMax: 3 },
+			data: 'Increase Bandwidth',
+		};
+
+		const result = addTask(context);
+
+		expect(result).toEqual([...taskList, {
+			id: expect.any(String),
+			task: context.data,
+		}]);
 	});
 });
