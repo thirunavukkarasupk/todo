@@ -1,5 +1,4 @@
 import TaskManager from './TaskManager';
-import actions from '../core/actions';
 
 describe('taskManager', () => {
 	const
@@ -7,7 +6,6 @@ describe('taskManager', () => {
 			getTask,
 			removeTask,
 			addTask,
-			init,
 		} = TaskManager;
 
 	const taskList = [
@@ -27,14 +25,6 @@ describe('taskManager', () => {
 		});
 	});
 
-	test('init', () => {
-		const context = { actions: actions, config: { taskList }};
-
-		const result = init(context);
-
-		expect(result).toEqual();
-	});
-
 	test('remove task from the list', () => {
 		const context = { state: { taskList }, data: { id: 'XYZG' }};
 
@@ -43,18 +33,32 @@ describe('taskManager', () => {
 		expect(result).toEqual([taskList[1]]);
 	});
 
-	test('adding task to the taskList', () => {
-		const context = {
-			state: { taskList },
-			config: { idLength: 4, taskMax: 3 },
-			data: 'Increase Bandwidth',
-		};
+	describe('adding task to the taskList', () => {
+		test('when the max task is higher', () => {
+			const context = {
+				state: { taskList },
+				config: { idLength: 4, taskMax: 3 },
+				data: 'Increase Bandwidth',
+			};
 
-		const result = addTask(context);
+			const result = addTask(context);
 
-		expect(result).toEqual([...taskList, {
-			id: expect.any(String),
-			task: context.data,
-		}]);
+			expect(result).toEqual([...taskList, {
+				id: expect.any(String),
+				task: context.data,
+			}]);
+		});
+
+		test('when the max Task is lesser', () => {
+			const context = {
+				state: { taskList },
+				config: { idLength: 4, taskMax: 2 },
+				data: 'Increase Bandwidth',
+			};
+
+			const result = addTask(context);
+
+			expect(result).toEqual([...taskList]);
+		});
 	});
 });
