@@ -28,7 +28,6 @@ const clearButton = (context) => ({
 });
 const filterButton = ({ data: filter }) => ({
 	filter,
-
 });
 const setEditing = ({ data }) => ({
 	input: data.todo,
