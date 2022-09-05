@@ -6,7 +6,7 @@ describe('todoManager', () => {
 		removeTodo,
 		toggleTodo,
 		toggleAll,
-		getCountOfActiveTask,
+		getCountOfActiveTodo,
 		getCountOfTodoList,
 		clearButton,
 		getCompletedTodo,
@@ -105,7 +105,7 @@ describe('todoManager', () => {
 	});
 
 	test('count of the active todos in the todoList', () => {
-		const result = getCountOfActiveTask([activeTodo, completedTodo]);
+		const result = getCountOfActiveTodo([activeTodo, completedTodo]);
 
 		expect(result).toEqual(1);
 	});

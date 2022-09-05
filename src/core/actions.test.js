@@ -89,9 +89,7 @@ describe('actions', () => {
 
 	test('set the values to be edited', () => {
 		const data = {
-			id: Symbol('id'),
 			todo: Symbol('todo'),
-			completed: Symbol('complted'),
 		};
 
 		const result = setEditing({ data });
