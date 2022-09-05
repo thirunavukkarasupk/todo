@@ -1,4 +1,5 @@
 import TaskManager from './TaskManager';
+import actions from '../core/actions';
 
 describe('taskManager', () => {
 	const
@@ -6,6 +7,7 @@ describe('taskManager', () => {
 			getTask,
 			removeTask,
 			addTask,
+			init,
 		} = TaskManager;
 
 	const taskList = [
@@ -26,7 +28,11 @@ describe('taskManager', () => {
 	});
 
 	test('init', () => {
+		const context = { actions: actions, config: { taskList }};
 
+		const result = init(context);
+
+		expect(result).toEqual();
 	});
 
 	test('remove task from the list', () => {

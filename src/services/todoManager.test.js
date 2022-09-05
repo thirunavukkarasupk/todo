@@ -17,7 +17,7 @@ describe('todoManager', () => {
 		addTaskToTodo,
 	} = TodoManager;
 
-	const todoList = [{
+	const [activeTodo, completedTodo] = [{
 		id: 'DDYB',
 		todo: 'Test The Code',
 		completed: false,
@@ -49,34 +49,34 @@ describe('todoManager', () => {
 	test('remove the todo from the todoList', () => {
 		const context = {
 			state: {
-				todoList,
+				todoList: [activeTodo, completedTodo],
 			},
 			data: { id: 'DDYB' },
 		};
 
 		const result = removeTodo(context);
 
-		expect(result).toEqual([todoList[1]]);
+		expect(result).toEqual([completedTodo]);
 	});
 
 	test('toggle The Todo', () => {
 		const context = {
 			state: {
-				todoList,
+				todoList: [activeTodo, completedTodo],
 			},
 			data: { id: 'DDYB', completed: false },
 		};
 		const result = toggleTodo(context);
 
 		expect(result)
-			.toEqual([{ ...todoList[0], completed: true }, todoList[1]]);
+			.toEqual([{ ...activeTodo, completed: true }, completedTodo]);
 	});
 
 	describe('toggle all the todos', () => {
 		test('when all the todos are not completed', () => {
 			const context = {
 				state: {
-					todoList,
+					todoList: [activeTodo, completedTodo],
 				},
 				data: true,
 			};
@@ -84,14 +84,14 @@ describe('todoManager', () => {
 			const result = toggleAll(context);
 
 			expect(result)
-				.toEqual([{ ...todoList[0], completed: true },
-					{ ...todoList[1], completed: true }]);
+				.toEqual([{ ...activeTodo, completed: true },
+					{ ...completedTodo, completed: true }]);
 		});
 
 		test('when all the todos are completed', () => {
 			const context = {
 				state: {
-					todoList,
+					todoList: [activeTodo, completedTodo],
 				},
 				data: false,
 			};
@@ -99,37 +99,37 @@ describe('todoManager', () => {
 			const result = toggleAll(context);
 
 			expect(result)
-				.toEqual([{ ...todoList[0], completed: false },
-					{ ...todoList[1], completed: false }]);
+				.toEqual([activeTodo,
+					{ ...completedTodo, completed: false }]);
 		});
 	});
 
 	test('count of the active todos in the todoList', () => {
-		const result = getCountOfActiveTask(todoList);
+		const result = getCountOfActiveTask([activeTodo, completedTodo]);
 
 		expect(result).toEqual(1);
 	});
 
 	test('count of the todos in the todoList', () => {
-		const result = getCountOfTodoList(todoList);
+		const result = getCountOfTodoList([activeTodo, completedTodo]);
 
 		expect(result).toEqual(Number('2'));
 	});
 
 	test('clear the completed todo from the todoList', () => {
 		const context = {
-			state: { todoList },
+			state: { todoList: [activeTodo, completedTodo] },
 		};
 
 		const result = clearButton(context);
 
-		expect(result).toEqual([todoList[0]]);
+		expect(result).toEqual([activeTodo]);
 	});
 
 	test('all the completed todos in the todoList', () => {
-		const result = getCompletedTodo(todoList);
+		const result = getCompletedTodo([activeTodo, completedTodo]);
 
-		expect(result).toEqual([todoList[1]]);
+		expect(result).toEqual([completedTodo]);
 	});
 
 	describe('filters', () => {
@@ -140,28 +140,28 @@ describe('todoManager', () => {
 		});
 
 		test('when the filter is active ', () => {
-			const todo = todoList[0];
+			const todo = activeTodo;
 			const result = filters.active(todo);
 
 			expect(result).toEqual(true);
 		});
 
 		test('when the filter is active', () => {
-			const todo = todoList[1];
+			const todo = completedTodo;
 			const result = filters.active(todo);
 
 			expect(result).toEqual(false);
 		});
 
 		test('when the filter is completed', () => {
-			const todo = todoList[0];
+			const todo = activeTodo;
 			const result = filters.completed(todo);
 
 			expect(result).toEqual(false);
 		});
 
 		test('when the filter is completed', () => {
-			const todo = todoList[1];
+			const todo = completedTodo;
 			const result = filters.completed(todo);
 
 			expect(result).toEqual(true);
@@ -171,35 +171,35 @@ describe('todoManager', () => {
 	describe('filter Todos from the TodoList', () => {
 		test('when all is clicked', () => {
 			const filter = 'all';
-			const result = filterTodos(todoList, filter);
+			const result = filterTodos([activeTodo, completedTodo], filter);
 
-			expect(result).toEqual(todoList);
+			expect(result).toEqual([activeTodo, completedTodo]);
 		});
 
 		test('when active is clicked', () => {
 			const filter = 'active';
-			const result = filterTodos(todoList, filter);
+			const result = filterTodos([activeTodo, completedTodo], filter);
 
-			expect(result).toEqual([todoList[0]]);
+			expect(result).toEqual([activeTodo]);
 		});
 
 		test('when completed is clicked', () => {
 			const filter = 'completed';
-			const result = filterTodos(todoList, filter);
+			const result = filterTodos([activeTodo, completedTodo], filter);
 
-			expect(result).toEqual([todoList[1]]);
+			expect(result).toEqual([completedTodo]);
 		});
 	});
 
 	test('when the editing has value', () => {
-		const editing = todoList[0];
+		const editing = activeTodo;
 		const input = 'Tested The Code';
 		const result = editTodo(
-			todoList, input, editing
+			[activeTodo, completedTodo], input, editing
 		);
 
 		expect(result)
-			.toEqual([{ ...todoList[0], todo: input }, todoList[1]]);
+			.toEqual([{ ...activeTodo, todo: input }, completedTodo]);
 	});
 
 	describe('is editing null', () => {
@@ -211,7 +211,7 @@ describe('todoManager', () => {
 		});
 
 		test('when editing is not Null', () => {
-			const editing = todoList[0];
+			const editing = activeTodo;
 			const result = isEditingNull(editing);
 
 			expect(result).toEqual(false);
@@ -220,7 +220,7 @@ describe('todoManager', () => {
 
 	test('add todo from task ', () => {
 		const context = {
-			state: { todoList },
+			state: { todoList: [activeTodo, completedTodo] },
 			data: {
 				id: 'KDNP',
 				task: 'Increase The Bandwidth',

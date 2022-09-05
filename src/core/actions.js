@@ -35,12 +35,10 @@ const setEditing = ({ data }) => ({
 	editing: data,
 });
 
-const editTodo = ({ state: { todoList, input, editing }}) => ({
+const editTodo = (context) => ({
 	input: '',
 	editing: null,
-	todoList: TodoManager.editTodo(
-		todoList, input, editing
-	),
+	todoList: TodoManager.editTodo(context),
 });
 
 const removeTask = (context) => ({
