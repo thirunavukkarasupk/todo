@@ -1,18 +1,16 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-
 import React from 'react';
 import TodoManager from '../../services/TodoManager';
 
 const ToggleAll = (context) => {
 	const { actions, state: { todoList }} = context;
-	const isAllChecked = TodoManager.getCountOfActiveTodo(todoList) === 0;
-	const noTodoList = TodoManager.getCountOfTodoList(todoList) === 0;
 
-	return !noTodoList
+	return !TodoManager.noTodoList(todoList)
 		&& <input
 			type="checkbox"
-			checked={ isAllChecked }
-			onChange={ () => actions.toggleAll(!isAllChecked) }
+			checked={ TodoManager.isAllChecked(todoList) }
+			onChange={ () => actions
+				.toggleAll(!TodoManager.isAllChecked(todoList)) }
 		   />
 	;
 };

@@ -4,10 +4,8 @@ import TodoManager from '../../services/TodoManager';
 
 const ClearButton = (context) => {
 	const { actions, state: { todoList }} = context;
-	const CompletedTodo = TodoManager
-		.filterTodos(todoList, 'completed').length > 0;
 
-	return CompletedTodo
+	return TodoManager.isCompletedAboveZero(todoList)
 		&& <button
 			className="clearButton"
 			onClick={ () => actions.clearButton() }

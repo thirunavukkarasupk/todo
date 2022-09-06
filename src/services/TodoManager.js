@@ -24,10 +24,13 @@ const TodoManager = {
 			completed: data,
 		})),
 
-	getCountOfActiveTodo: (todoList) =>
-		todoList.filter((todo) => !todo.completed).length,
+	isAllChecked: (todoList) =>
+		TodoManager.filterTodos(todoList, 'active').length === 0,
 
-	getCountOfTodoList: (todoList) => todoList.length,
+	noTodoList: (todoList) => todoList.length === 0,
+
+	isCompletedAboveZero: (todoList) =>
+		TodoManager.filterTodos(todoList, 'completed').length > 0,
 
 	clearButton: ({ state: { todoList }}) =>
 		TodoManager.filterTodos(todoList, 'active'),
@@ -41,9 +44,7 @@ const TodoManager = {
 	filterTodos: (todoList, filter) =>
 		todoList.filter(TodoManager.filters[filter]),
 
-	editTodo: (
-		todoList, input, editing
-	) =>
+	editTodo: ({ state: { todoList, input, editing }}) =>
 		todoList.map((todo) => (todo.id === editing.id
 			? { ...todo, todo: input }
 			: todo)),

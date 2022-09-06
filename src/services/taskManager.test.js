@@ -1,4 +1,5 @@
 import TaskManager from './TaskManager';
+import actions from '../core/actions';
 
 describe('taskManager', () => {
 	const
@@ -6,11 +7,12 @@ describe('taskManager', () => {
 			getTask,
 			removeTask,
 			addTask,
+			init,
 		} = TaskManager;
 
 	const taskList = [
-		{ id: 'XYZG', task: 'Debug The Code' },
-		{ id: 'KLMN', task: 'Clear The Code' },
+		{ id: Symbol('id'), task: 'Debug The Code' },
+		{ id: Symbol('id'), task: 'Clear The Code' },
 	];
 
 	test('get task', () => {
@@ -24,9 +26,20 @@ describe('taskManager', () => {
 			task: text,
 		});
 	});
+	test('init', () => {
+		const context = {
+			actions: actions,
+			config: { taskList },
+		};
+		const task = Symbol('task');
+
+		init(context);
+
+		expect(actions.addTask).toHaveBeenCalledWith(task);
+	});
 
 	test('remove task from the list', () => {
-		const context = { state: { taskList }, data: { id: 'XYZG' }};
+		const context = { state: { taskList }, data: { id: taskList[0].id }};
 
 		const result = removeTask(context);
 
@@ -58,7 +71,7 @@ describe('taskManager', () => {
 
 			const result = addTask(context);
 
-			expect(result).toEqual([...taskList]);
+			expect(result).toEqual(taskList);
 		});
 	});
 });

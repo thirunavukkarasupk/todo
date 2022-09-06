@@ -1,4 +1,5 @@
 import TodoManager from './TodoManager';
+import * as random from '@laufire/utils/random';
 
 describe('todoManager', () => {
 	const {
@@ -6,10 +7,10 @@ describe('todoManager', () => {
 		removeTodo,
 		toggleTodo,
 		toggleAll,
-		getCountOfActiveTodo,
-		getCountOfTodoList,
+		isAllChecked,
+		noTodoList,
+		isCompletedAboveZero,
 		clearButton,
-		getCompletedTodo,
 		filters,
 		filterTodos,
 		editTodo,
@@ -18,12 +19,12 @@ describe('todoManager', () => {
 	} = TodoManager;
 
 	const [activeTodo, completedTodo] = [{
-		id: 'DDYB',
-		todo: 'Test The Code',
+		id: Symbol('id'),
+		todo: Symbol('todo'),
 		completed: false,
 	}, {
-		id: 'IJKL',
-		todo: 'Fix The Bugs',
+		id: Symbol('id'),
+		todo: Symbol('todo'),
 		completed: true,
 	}];
 
@@ -41,6 +42,8 @@ describe('todoManager', () => {
 			completed: false,
 		};
 
+		jest.spyOn(random, 'rndBetween').mockReturnValue(newTodo.id);
+
 		const result = addTodo(context);
 
 		expect(result).toEqual([newTodo]);
@@ -51,7 +54,7 @@ describe('todoManager', () => {
 			state: {
 				todoList: [activeTodo, completedTodo],
 			},
-			data: { id: 'DDYB' },
+			data: { id: activeTodo.id },
 		};
 
 		const result = removeTodo(context);
@@ -59,17 +62,31 @@ describe('todoManager', () => {
 		expect(result).toEqual([completedTodo]);
 	});
 
-	test('toggle The Todo', () => {
-		const context = {
-			state: {
-				todoList: [activeTodo, completedTodo],
-			},
-			data: { id: 'DDYB', completed: false },
-		};
-		const result = toggleTodo(context);
+	describe('toggle The todo', () => {
+		test('when the data is in the todoList', () => {
+			const context = {
+				state: {
+					todoList: [activeTodo, completedTodo],
+				},
+				data: { id: activeTodo.id, completed: false },
+			};
+			const result = toggleTodo(context);
 
-		expect(result)
-			.toEqual([{ ...activeTodo, completed: true }, completedTodo]);
+			expect(result)
+				.toEqual([{ ...activeTodo, completed: true }, completedTodo]);
+		});
+		test('when the data is not in the todoList', () => {
+			const context = {
+				state: {
+					todoList: [activeTodo, completedTodo],
+				},
+				data: { id: Symbol('differentId'), completed: false },
+			};
+			const result = toggleTodo(context);
+
+			expect(result)
+				.toEqual([activeTodo, completedTodo]);
+		});
 	});
 
 	describe('toggle all the todos', () => {
@@ -104,16 +121,70 @@ describe('todoManager', () => {
 		});
 	});
 
-	test('count of the active todos in the todoList', () => {
-		const result = getCountOfActiveTodo([activeTodo, completedTodo]);
+	describe('is all checked', () => {
+		test('all the todos are checked', () => {
+			jest.spyOn(TodoManager, 'filterTodos')
+				.mockReturnValue([]);
 
-		expect(result).toEqual(1);
+			const result = isAllChecked([completedTodo]);
+
+			expect(TodoManager.filterTodos)
+				.toHaveBeenCalledWith([completedTodo], 'active');
+
+			expect(result).toEqual(true);
+		});
+
+		test('not all the todos are checked', () => {
+			jest.spyOn(TodoManager, 'filterTodos')
+				.mockReturnValue([activeTodo]);
+
+			const result = isAllChecked([activeTodo, completedTodo]);
+
+			expect(TodoManager.filterTodos)
+				.toHaveBeenCalledWith([activeTodo, completedTodo], 'active');
+
+			expect(result).toEqual(false);
+		});
 	});
 
-	test('count of the todos in the todoList', () => {
-		const result = getCountOfTodoList([activeTodo, completedTodo]);
+	describe('no todoList', () => {
+		test('todos are there in the TodoList', () => {
+			const result = noTodoList([activeTodo, completedTodo]);
 
-		expect(result).toEqual(Number('2'));
+			expect(result).toEqual(false);
+		});
+
+		test('no todos in the todoList', () => {
+			const result = noTodoList([]);
+
+			expect(result).toEqual(true);
+		});
+	});
+
+	describe('is completed above zero', () => {
+		test('completed todos are greater than zero', () => {
+			jest.spyOn(TodoManager, 'filterTodos')
+				.mockReturnValue([completedTodo]);
+
+			const result = isCompletedAboveZero([activeTodo, completedTodo]);
+
+			expect(TodoManager.filterTodos)
+				.toHaveBeenCalledWith([activeTodo, completedTodo], 'completed');
+
+			expect(result).toEqual(true);
+		});
+
+		test('no completed todos in the list', () => {
+			jest.spyOn(TodoManager, 'filterTodos')
+				.mockReturnValue([]);
+
+			const result = isCompletedAboveZero([activeTodo]);
+
+			expect(TodoManager.filterTodos)
+				.toHaveBeenCalledWith([activeTodo], 'completed');
+
+			expect(result).toEqual(false);
+		});
 	});
 
 	test('clear the completed todo from the todoList', () => {
@@ -121,15 +192,15 @@ describe('todoManager', () => {
 			state: { todoList: [activeTodo, completedTodo] },
 		};
 
+		jest.spyOn(TodoManager, 'filterTodos')
+			.mockReturnValue([activeTodo]);
+
 		const result = clearButton(context);
 
+		expect(TodoManager.filterTodos)
+			.toHaveBeenCalledWith([activeTodo, completedTodo], 'active');
+
 		expect(result).toEqual([activeTodo]);
-	});
-
-	test('all the completed todos in the todoList', () => {
-		const result = getCompletedTodo([activeTodo, completedTodo]);
-
-		expect(result).toEqual([completedTodo]);
 	});
 
 	describe('filters', () => {
@@ -191,15 +262,18 @@ describe('todoManager', () => {
 		});
 	});
 
-	test('when the editing has value', () => {
-		const editing = activeTodo;
-		const input = 'Tested The Code';
-		const result = editTodo(
-			[activeTodo, completedTodo], input, editing
-		);
+	test('edit todo', () => {
+		const context = {
+			state: { todoList: [activeTodo, completedTodo],
+				input: Symbol('input'),
+				editing: activeTodo },
+		};
+
+		const result = editTodo(context);
 
 		expect(result)
-			.toEqual([{ ...activeTodo, todo: input }, completedTodo]);
+			.toEqual([{ ...activeTodo, todo: context.state.input },
+				completedTodo]);
 	});
 
 	describe('is editing null', () => {
@@ -222,8 +296,8 @@ describe('todoManager', () => {
 		const context = {
 			state: { todoList: [activeTodo, completedTodo] },
 			data: {
-				id: 'KDNP',
-				task: 'Increase The Bandwidth',
+				id: Symbol('id'),
+				task: Symbol('task'),
 			},
 		};
 		const result = addTaskToTodo(context);
