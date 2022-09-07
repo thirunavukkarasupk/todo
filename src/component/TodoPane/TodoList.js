@@ -8,7 +8,7 @@ const TodoList = (context) => {
 	const filteredTodos = TodoManager.filterTodos(todoList, filter);
 
 	return filteredTodos.map((todo) =>
-		<div key={ todo.id } className="todo-div">
+		<div key={ todo.id } className="todo-div" role="todoList">
 			<Todo { ...{ ...context, data: todo } }/>
 		</div>);
 };

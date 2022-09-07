@@ -4,7 +4,7 @@ import FilterButton from './FilterButton';
 const FilterBar = (context) => {
 	const { config: { filters }} = context;
 
-	return filters.map((filter) => <span key={ filter }>
+	return filters.map((filter) => <span key={ filter } role="filterBar">
 		<FilterButton { ...{ ...context, data: filter } }/>
 	</span>);
 } ;

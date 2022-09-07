@@ -7,6 +7,7 @@ const ToggleAll = (context) => {
 
 	return !TodoManager.noTodoList(todoList)
 		&& <input
+			role="toggleAll"
 			type="checkbox"
 			checked={ TodoManager.isAllChecked(todoList) }
 			onChange={ () => actions

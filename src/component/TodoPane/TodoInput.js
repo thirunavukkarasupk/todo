@@ -10,6 +10,7 @@ const TodoInput = (context) => {
 
 	return (
 		<input
+			role="todoInput"
 			value={ input }
 			onChange={ (event) => actions.setInput(event.target.value) }
 			onKeyUp={ (event) =>

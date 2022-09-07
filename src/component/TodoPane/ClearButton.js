@@ -8,6 +8,7 @@ const ClearButton = (context) => {
 	return TodoManager.isCompletedAboveZero(todoList)
 		&& <button
 			className="clearButton"
+			role="clearButton"
 			onClick={ () => actions.clearButton() }
 		   >ClearCompletedTasks
 		</button>;
