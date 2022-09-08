@@ -122,34 +122,40 @@ describe('todoManager', () => {
 	});
 
 	describe('is all checked', () => {
+		const completed = Symbol('completedTodo');
+		const active = Symbol('activeTodo');
+
 		test('all the todos are checked', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
 				.mockReturnValue([]);
 
-			const result = isAllChecked([completedTodo]);
+			const result = isAllChecked([completed]);
 
 			expect(TodoManager.filterTodos)
-				.toHaveBeenCalledWith([completedTodo], 'active');
+				.toHaveBeenCalledWith([completed], 'active');
 
 			expect(result).toEqual(true);
 		});
 
 		test('not all the todos are checked', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
-				.mockReturnValue([activeTodo]);
+				.mockReturnValue([active]);
 
-			const result = isAllChecked([activeTodo, completedTodo]);
+			const result = isAllChecked([active, completed]);
 
 			expect(TodoManager.filterTodos)
-				.toHaveBeenCalledWith([activeTodo, completedTodo], 'active');
+				.toHaveBeenCalledWith([active, completed], 'active');
 
 			expect(result).toEqual(false);
 		});
 	});
 
 	describe('no todoList', () => {
+		const active = Symbol('activeTodo');
+		const completed = Symbol('completedTodo');
+
 		test('todos are there in the TodoList', () => {
-			const result = noTodoList([activeTodo, completedTodo]);
+			const result = noTodoList([active, completed]);
 
 			expect(result).toEqual(false);
 		});
@@ -162,14 +168,17 @@ describe('todoManager', () => {
 	});
 
 	describe('is completed above zero', () => {
+		const active = Symbol('activeTodo');
+		const completed = Symbol('completedTodo');
+
 		test('completed todos are greater than zero', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
-				.mockReturnValue([completedTodo]);
+				.mockReturnValue([completed]);
 
-			const result = isCompletedAboveZero([activeTodo, completedTodo]);
+			const result = isCompletedAboveZero([active, completed]);
 
 			expect(TodoManager.filterTodos)
-				.toHaveBeenCalledWith([activeTodo, completedTodo], 'completed');
+				.toHaveBeenCalledWith([active, completed], 'completed');
 
 			expect(result).toEqual(true);
 		});
@@ -178,29 +187,32 @@ describe('todoManager', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
 				.mockReturnValue([]);
 
-			const result = isCompletedAboveZero([activeTodo]);
+			const result = isCompletedAboveZero([active]);
 
 			expect(TodoManager.filterTodos)
-				.toHaveBeenCalledWith([activeTodo], 'completed');
+				.toHaveBeenCalledWith([active], 'completed');
 
 			expect(result).toEqual(false);
 		});
 	});
 
 	test('clear the completed todo from the todoList', () => {
+		const active = Symbol('activeTodo');
+		const completed = Symbol('completedTodo');
+
 		const context = {
-			state: { todoList: [activeTodo, completedTodo] },
+			state: { todoList: [active, completed] },
 		};
 
 		jest.spyOn(TodoManager, 'filterTodos')
-			.mockReturnValue([activeTodo]);
+			.mockReturnValue([active]);
 
 		const result = clearButton(context);
 
 		expect(TodoManager.filterTodos)
-			.toHaveBeenCalledWith([activeTodo, completedTodo], 'active');
+			.toHaveBeenCalledWith([active, completed], 'active');
 
-		expect(result).toEqual([activeTodo]);
+		expect(result).toEqual([active]);
 	});
 
 	describe('filters', () => {
@@ -285,7 +297,7 @@ describe('todoManager', () => {
 		});
 
 		test('when editing is not Null', () => {
-			const editing = activeTodo;
+			const editing = Symbol('activeTodo');
 			const result = isEditingNull(editing);
 
 			expect(result).toEqual(false);
@@ -293,8 +305,11 @@ describe('todoManager', () => {
 	});
 
 	test('add todo from task ', () => {
+		const active = Symbol('activeTodo');
+		const completed = Symbol('completedTodo');
+
 		const context = {
-			state: { todoList: [activeTodo, completedTodo] },
+			state: { todoList: [active, completed] },
 			data: {
 				id: Symbol('id'),
 				task: Symbol('task'),

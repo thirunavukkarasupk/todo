@@ -1,5 +1,6 @@
 import TaskManager from './TaskManager';
 import actions from '../core/actions';
+import { random } from '@laufire/utils';
 
 describe('taskManager', () => {
 	const
@@ -17,7 +18,9 @@ describe('taskManager', () => {
 
 	test('get task', () => {
 		const idLength = 4;
-		const text = expect.any(String);
+		const text = Symbol('text');
+
+		jest.spyOn(random, 'rndString').mockReturnValue(expect.any(String));
 
 		const result = getTask(idLength, text);
 
@@ -26,16 +29,19 @@ describe('taskManager', () => {
 			task: text,
 		});
 	});
+
 	test('init', () => {
 		const context = {
 			actions: actions,
 			config: { taskList },
 		};
-		const task = Symbol('task');
+
+		jest.spyOn(actions, 'addTask').mockReturnValue();
 
 		init(context);
 
-		expect(actions.addTask).toHaveBeenCalledWith(task);
+		taskList.map((task) => expect(actions.addTask)
+			.toHaveBeenCalledWith(task));
 	});
 
 	test('remove task from the list', () => {
@@ -53,6 +59,8 @@ describe('taskManager', () => {
 				config: { idLength: 4, taskMax: 3 },
 				data: 'Increase Bandwidth',
 			};
+
+			jest.spyOn(random, 'rndString').mockReturnValue(expect.any(String));
 
 			const result = addTask(context);
 

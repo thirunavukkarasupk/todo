@@ -9,7 +9,7 @@ describe('ticker', () => {
 		const context = { actions: actions, config: { tickerDelay: 3000 }};
 		const rndTask = Symbol('rndTask');
 
-		jest.spyOn(global, 'setInterval').mockImplementation(jest.fn());
+		jest.spyOn(global, 'setInterval').mockImplementation((fn) => fn());
 		jest.spyOn(actions, 'addTask').mockReturnValue(rndTask);
 		jest.spyOn(TaskRetriever, 'getRndTask')
 			.mockReturnValue(rndTask);
@@ -19,6 +19,6 @@ describe('ticker', () => {
 		expect(global.setInterval)
 			.toHaveBeenCalledWith(expect.any(Function),
 				context.config.tickerDelay);
-		expect(actions.addTask).toHaveBeenCalledWith(expect.any(Function));
+		expect(actions.addTask).toHaveBeenCalledWith(rndTask);
 	});
 });
