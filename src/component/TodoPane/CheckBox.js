@@ -7,6 +7,7 @@ const CheckBox = (context) => {
 	return (
 		<input
 			type="checkbox"
+			role="checkBox"
 			checked={ completed }
 			onChange={ () => actions.toggleTodo(data) }
 		/>);
