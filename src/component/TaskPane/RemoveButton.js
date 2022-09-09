@@ -5,6 +5,7 @@ const RemoveButton = (context) => {
 
 	return (
 		<button
+			role="removeButton"
 			onClick={ () => actions.removeTask(data) }
 		>X</button>);
 };
