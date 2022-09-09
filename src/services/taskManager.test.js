@@ -1,6 +1,6 @@
 import TaskManager from './TaskManager';
 import actions from '../core/actions';
-import { random } from '@laufire/utils';
+import * as random from '@laufire/utils/random';
 
 describe('taskManager', () => {
 	const
@@ -17,15 +17,20 @@ describe('taskManager', () => {
 	];
 
 	test('get task', () => {
-		const idLength = 4;
+		const idLength = Symbol('id');
 		const text = Symbol('text');
+		const returnId = Symbol('returnId');
 
-		jest.spyOn(random, 'rndString').mockReturnValue(expect.any(String));
+		// Todo return Symbol,Random paramaeter Check
+
+		jest.spyOn(random, 'rndString').mockReturnValue(returnId);
 
 		const result = getTask(idLength, text);
 
+		expect(random.rndString).toHaveBeenCalledWith(idLength);
+
 		expect(result).toEqual({
-			id: expect.any(String),
+			id: returnId,
 			task: text,
 		});
 	});
@@ -56,16 +61,22 @@ describe('taskManager', () => {
 		test('when the max task is higher', () => {
 			const context = {
 				state: { taskList },
-				config: { idLength: 4, taskMax: 3 },
-				data: 'Increase Bandwidth',
+				config: { idLength: Symbol('idLength'), taskMax: 3 },
+				data: Symbol('data'),
 			};
+			const returnId = Symbol('returnId');
 
-			jest.spyOn(random, 'rndString').mockReturnValue(expect.any(String));
+			// Todo-Symbol,parameterCheck,data-Symbol,id-Symbol
+
+			jest.spyOn(random, 'rndString').mockReturnValue(returnId);
 
 			const result = addTask(context);
 
+			expect(random.rndString)
+				.toHaveBeenCalledWith(context.config.idLength);
+
 			expect(result).toEqual([...taskList, {
-				id: expect.any(String),
+				id: returnId,
 				task: context.data,
 			}]);
 		});
@@ -74,7 +85,7 @@ describe('taskManager', () => {
 			const context = {
 				state: { taskList },
 				config: { idLength: 4, taskMax: 2 },
-				data: 'Increase Bandwidth',
+				data: Symbol('data'),
 			};
 
 			const result = addTask(context);

@@ -30,23 +30,25 @@ describe('todoManager', () => {
 
 	test('add todo to the todoList', () => {
 		const context = {
-			config: { idLength: 4 },
+			config: { idLength: Symbol('idLength') },
 			state: {
 				input: Symbol('input'),
 				todoList: [],
 			},
 		};
-		const newTodo = {
-			id: expect.any(String),
+		const expected = {
+			id: Symbol('id'),
 			todo: context.state.input,
 			completed: false,
 		};
 
-		jest.spyOn(random, 'rndBetween').mockReturnValue(newTodo.id);
+		jest.spyOn(random, 'rndString').mockReturnValue(expected.id);
 
 		const result = addTodo(context);
 
-		expect(result).toEqual([newTodo]);
+		expect(random.rndString).toHaveBeenCalledWith(context.config.idLength);
+
+		expect(result).toEqual([expected]);
 	});
 
 	test('remove the todo from the todoList', () => {
@@ -125,9 +127,11 @@ describe('todoManager', () => {
 		const completed = Symbol('completedTodo');
 		const active = Symbol('activeTodo');
 
+		// Todo {object  in mockReturnValue}
+
 		test('all the todos are checked', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
-				.mockReturnValue([]);
+				.mockReturnValue({ length: 0 });
 
 			const result = isAllChecked([completed]);
 
@@ -139,7 +143,7 @@ describe('todoManager', () => {
 
 		test('not all the todos are checked', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
-				.mockReturnValue([active]);
+				.mockReturnValue({ length: 1 });
 
 			const result = isAllChecked([active, completed]);
 
@@ -151,11 +155,12 @@ describe('todoManager', () => {
 	});
 
 	describe('no todoList', () => {
-		const active = Symbol('activeTodo');
-		const completed = Symbol('completedTodo');
+		const todoList = Symbol('todoList');
+
+		// TOdo:{object.length.check}
 
 		test('todos are there in the TodoList', () => {
-			const result = noTodoList([active, completed]);
+			const result = noTodoList(todoList);
 
 			expect(result).toEqual(false);
 		});
@@ -171,9 +176,11 @@ describe('todoManager', () => {
 		const active = Symbol('activeTodo');
 		const completed = Symbol('completedTodo');
 
+		// todo.object.length check
+
 		test('completed todos are greater than zero', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
-				.mockReturnValue([completed]);
+				.mockReturnValue({ length: 1 });
 
 			const result = isCompletedAboveZero([active, completed]);
 
@@ -185,7 +192,7 @@ describe('todoManager', () => {
 
 		test('no completed todos in the list', () => {
 			jest.spyOn(TodoManager, 'filterTodos')
-				.mockReturnValue([]);
+				.mockReturnValue({ length: 0 });
 
 			const result = isCompletedAboveZero([active]);
 
@@ -203,6 +210,7 @@ describe('todoManager', () => {
 		const context = {
 			state: { todoList: [active, completed] },
 		};
+		// Todo todoList hastobe a Symbol
 
 		jest.spyOn(TodoManager, 'filterTodos')
 			.mockReturnValue([active]);
