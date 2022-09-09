@@ -6,6 +6,7 @@ const FilterButton = (context) => {
 
 	return !TodoManager.noTodoList(todoList)
 		&& <button
+			role="filterButton"
 			onClick={ () => actions.filterButton(filter) }
 			// eslint-disable-next-line no-mixed-spaces-and-tabs
 		   >
