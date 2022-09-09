@@ -6,6 +6,7 @@ const EditButton = (context) => {
 
 	return (
 		<button
+			role="editTodo"
 			disabled={ TodoManager.isEditingNull(editing) }
 			onClick={ () => actions.editTodo() }
 		>Edit</button>);
