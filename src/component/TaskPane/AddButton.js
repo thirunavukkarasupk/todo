@@ -5,6 +5,7 @@ const AddButton = (context) => {
 
 	return (
 		<button
+			role="addButton"
 			onClick={ () => {
 				actions.removeTask(data);
 				actions.addTaskToTodo(data);
