@@ -6,7 +6,7 @@ const Task = (context) => {
 	const { data: { task }} = context;
 
 	return (
-		<div>
+		<div role="task">
 			<AddButton { ...context }/>
 			{task}
 			<RemoveButton { ...context }/>
