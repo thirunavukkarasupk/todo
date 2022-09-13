@@ -6,8 +6,8 @@ const ActionButton = (context) => {
 	const { state: { editing }} = context;
 
 	return editing
-		? <EditButton role="actionButton" { ...context }/>
-		: <AddButton role="actionButton" { ...context }/>;
+		? <EditButton { ...context }/>
+		: <AddButton { ...context }/>;
 };
 
 export default ActionButton;
