@@ -16,6 +16,7 @@ describe('todoManager', () => {
 		editTodo,
 		isEditingNull,
 		addTaskToTodo,
+		getEditClassName,
 	} = TodoManager;
 
 	const [activeTodo, completedTodo] = [{
@@ -332,5 +333,47 @@ describe('todoManager', () => {
 					todo: context.data.task,
 					completed: false,
 				}]);
+	});
+
+	describe.only('getEditClassName', () => {
+		const id = random.rndString();
+
+		test('when editing is not null', () => {
+			const context = {
+				state: {
+					editing: {
+						id,
+					},
+				},
+				data: {
+					id,
+				},
+			};
+
+			jest.spyOn(TodoManager, 'isEditingNull').mockReturnValue(false);
+
+			const result = getEditClassName(context);
+
+			expect(TodoManager.isEditingNull)
+				.toHaveBeenCalledWith(context.state.editing);
+			expect(result).toEqual('edit-active');
+		});
+
+		test('when editing is null', () => {
+			const context = {
+				state: {
+					editing: null,
+				},
+				data: null,
+			};
+
+			jest.spyOn(TodoManager, 'isEditingNull').mockReturnValue(true);
+
+			const result = getEditClassName(context);
+
+			expect(TodoManager.isEditingNull)
+				.toHaveBeenCalledWith(context.state.editing);
+			expect(result).toEqual('edit-inactive');
+		});
 	});
 });

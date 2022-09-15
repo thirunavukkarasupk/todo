@@ -56,6 +56,11 @@ const TodoManager = {
 			{ id: data.id,
 				todo: data.task,
 				completed: false }],
+
+	getEditClassName: ({ state: { editing }, data }) =>
+		(!TodoManager.isEditingNull(editing) && editing.id === data.id
+			? 'edit-active'
+			: 'edit-inactive'),
 };
 
 export default TodoManager;
