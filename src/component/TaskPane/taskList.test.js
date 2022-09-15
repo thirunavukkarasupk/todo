@@ -6,8 +6,8 @@ import { rndString } from '@laufire/utils/random';
 
 test('taskList', () => {
 	const context = { state: { taskList: [
-		{ id: rndString(), task: Symbol('task') },
-		{ id: rndString(), task: Symbol('task') },
+		{ id: rndString() },
+		{ id: rndString() },
 	] }};
 
 	jest.spyOn(Task, 'default').mockReturnValue(<div role="task"/>);
