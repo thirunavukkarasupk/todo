@@ -15,7 +15,7 @@ const Todo = (context) => {
 			<CheckBox { ...context }/>
 			<span
 				role="todoText"
-				className={ TodoManager.getEditClassName(context) }
+				className={ TodoManager.getEditMode(context) }
 				onClick={ () => actions.setEditing(data) }
 			>{todo}</span>
 			<RemoveButton { ...context }/>

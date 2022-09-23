@@ -1,10 +1,11 @@
 const seed = {
 	input: '',
-	todoList: [{ id: 'aaaa', todo: 'a', completed: false },
-		{ id: 'bbbb', todo: 'ab', completed: false },
-		{ id: 'cccc', todo: 'abc', completed: false },
-		{ id: 'dddd', todo: 'abcd', completed: false },
-		{ id: 'eeee', todo: 'abcde', completed: false }],
+	todoList:
+	[{ id: 'aaaa', todo: 'a', completed: false, mode: 'edit-inactive' },
+		{ id: 'bbbb', todo: 'ab', completed: false, mode: 'edit-inactive' },
+		{ id: 'cccc', todo: 'abc', completed: false, mode: 'edit-inactive' },
+		{ id: 'dddd', todo: 'abcd', completed: false, mode: 'edit-inactive' },
+		{ id: 'eeee', todo: 'abcde', completed: false, mode: 'edit-inactive' }],
 	filter: 'all',
 	editing: null,
 	taskList: [],

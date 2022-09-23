@@ -19,7 +19,7 @@ describe('todo', () => {
 		jest.spyOn(CheckBox, 'default').mockReturnValue(<div role="checkBox"/>);
 		jest.spyOn(RemoveButton, 'default')
 			.mockReturnValue(<div role="removeButton"/>);
-		jest.spyOn(TodoManager, 'getEditClassName')
+		jest.spyOn(TodoManager, 'getEditMode')
 			.mockReturnValue('edit-inactive');
 
 		const { getByRole } = render(Todo(context));
@@ -30,12 +30,12 @@ describe('todo', () => {
 		expect(getByRole('todo')).toHaveClass('todo-active');
 
 		expect(context.actions.setEditing).toHaveBeenCalledWith(context.data);
-		expect(TodoManager.getEditClassName).toHaveBeenCalledWith(context);
+		expect(TodoManager.getEditMode).toHaveBeenCalledWith(context);
 		expect(CheckBox.default).toHaveBeenCalledWith(context, {});
 		expect(RemoveButton.default).toHaveBeenCalledWith(context, {});
 	});
 
-	test('when the completed is false', () => {
+	test('when the completed is true', () => {
 		const context = {
 			state: { editing: null },
 			data: {
@@ -48,7 +48,7 @@ describe('todo', () => {
 		jest.spyOn(CheckBox, 'default').mockReturnValue(<div role="checkBox"/>);
 		jest.spyOn(RemoveButton, 'default')
 			.mockReturnValue(<div role="removeButton"/>);
-		jest.spyOn(TodoManager, 'getEditClassName')
+		jest.spyOn(TodoManager, 'getEditMode')
 			.mockReturnValue('edit-inactive');
 
 		const { getByRole } = render(Todo(context));
@@ -59,7 +59,7 @@ describe('todo', () => {
 		expect(getByRole('todo')).toHaveClass('todo-completed');
 
 		expect(context.actions.setEditing).toHaveBeenCalledWith(context.data);
-		expect(TodoManager.getEditClassName).toHaveBeenCalledWith(context);
+		expect(TodoManager.getEditMode).toHaveBeenCalledWith(context);
 		expect(CheckBox.default).toHaveBeenCalledWith(context, {});
 		expect(RemoveButton.default).toHaveBeenCalledWith(context, {});
 	});

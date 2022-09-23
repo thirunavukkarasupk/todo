@@ -5,7 +5,8 @@ const TodoManager = {
 		[...todoList,
 			{ id: rndString(idLength),
 				todo: input,
-				completed: false }],
+				completed: false,
+				mode: 'edit-inactive' }],
 
 	removeTodo: ({ state: { todoList }, data: { id }}) =>
 		todoList.filter((todo) => todo.id !== id),
@@ -57,10 +58,10 @@ const TodoManager = {
 				todo: data.task,
 				completed: false }],
 
-	getEditClassName: ({ state: { editing }, data }) =>
-		(!TodoManager.isEditingNull(editing) && editing.id === data.id
-			? 'edit-active'
-			: 'edit-inactive'),
+	getEditMode: ({ state: { editing }, data, config: { edit }}) =>
+		(editing && editing.id === data.id
+			? edit[1]
+			: data.mode),
 };
 
 export default TodoManager;
