@@ -16,7 +16,7 @@
 	}
 
 	.taskPane{
-		position:relative;
+		position:absolute;
 		margin-left:50%;
 		width:50%;
 		height:100%;
@@ -33,15 +33,15 @@
 	}
 
 	.todo-active{
-		color:black;
+		color:rgb(0, 0, 0);
 	}
 
 	.edit-active{
-		background-color:rgb(13, 100, 74);
+		background-color:rgb(12, 136, 99);
 	}
 
 	.edit-inactive{
-		color:black;
+		color:rgb(4, 4, 4);
 	}
 
 	.clearButton{
