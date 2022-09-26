@@ -47,7 +47,7 @@ const TodoManager = {
 
 	editTodo: ({ state: { todoList, input, editing }}) =>
 		todoList.map((todo) => (todo.id === editing.id
-			? { ...todo, todo: input }
+			? { ...todo, todo: input, mode: 'edit-inactive' }
 			: todo)),
 
 	isEditingNull: (editing) => editing === null,
@@ -58,10 +58,10 @@ const TodoManager = {
 				todo: data.task,
 				completed: false }],
 
-	getEditMode: ({ state: { editing }, data, config: { edit }}) =>
-		(editing && editing.id === data.id
-			? edit[1]
-			: data.mode),
+	getEditMode: ({ state: { todoList }, data }) =>
+		todoList.map((todo) => (todo.id === data.id
+			? { ...todo, mode: 'edit-active' }
+			: todo)),
 };
 
 export default TodoManager;

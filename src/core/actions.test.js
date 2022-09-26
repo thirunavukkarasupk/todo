@@ -16,7 +16,6 @@ describe('actions', () => {
 		addTaskToTodo,
 		addTask } = actions;
 
-	const context = Symbol('context');
 	const todoList = Symbol('todoList');
 	const taskList = Symbol('taskList');
 
@@ -31,6 +30,8 @@ describe('actions', () => {
 	test('adding todo to a todoList', () => {
 		jest.spyOn(TodoManager, 'addTodo').mockReturnValue(todoList);
 
+		const context = Symbol('context');
+
 		const result = addTodo(context);
 
 		expect(TodoManager.addTodo)
@@ -42,6 +43,8 @@ describe('actions', () => {
 	test('remove a todo from the List', () => {
 		jest.spyOn(TodoManager, 'removeTodo').mockReturnValue(todoList);
 
+		const context = Symbol('context');
+
 		const result = removeTodo(context);
 
 		expect(TodoManager.removeTodo).toHaveBeenCalledWith(context);
@@ -51,6 +54,8 @@ describe('actions', () => {
 
 	test('toggle a todo in the todoList', () => {
 		jest.spyOn(TodoManager, 'toggleTodo').mockReturnValue(todoList);
+
+		const context = Symbol('context');
 
 		const result = toggleTodo(context);
 
@@ -62,6 +67,8 @@ describe('actions', () => {
 	test('toggle all the todos in the list', () => {
 		jest.spyOn(TodoManager, 'toggleAll').mockReturnValue(todoList);
 
+		const context = Symbol('context');
+
 		const result = toggleAll(context);
 
 		expect(TodoManager.toggleAll).toHaveBeenCalledWith(context);
@@ -71,6 +78,8 @@ describe('actions', () => {
 
 	test('clear the completed tasks', () => {
 		jest.spyOn(TodoManager, 'clearButton').mockReturnValue(todoList);
+
+		const context = Symbol('context');
 
 		const result = clearButton(context);
 
@@ -88,17 +97,25 @@ describe('actions', () => {
 	});
 
 	test('set the values to be edited', () => {
-		const data = {
-			todo: Symbol('todo'),
+		const context = {
+			data: {
+				todo: Symbol('todo'),
+			},
 		};
 
-		const result = setEditing({ data });
+		jest.spyOn(TodoManager, 'getEditMode').mockReturnValue(todoList);
+		const result = setEditing(context);
 
-		expect(result).toEqual({ input: data.todo, editing: data });
+		expect(result).toEqual({ input: context.data.todo,
+			editing: context.data,
+			todoList: todoList });
 	});
 
 	test('edit the todo in the todoList', () => {
 		jest.spyOn(TodoManager, 'editTodo').mockReturnValue(todoList);
+
+		const context = Symbol('context');
+
 		const result = editTodo(context);
 
 		expect(TodoManager.editTodo)
@@ -114,6 +131,8 @@ describe('actions', () => {
 	test('remove the task from the taskList', () => {
 		jest.spyOn(TaskManager, 'removeTask').mockReturnValue(taskList);
 
+		const context = Symbol('context');
+
 		const result = removeTask(context);
 
 		expect(TaskManager.removeTask)
@@ -125,6 +144,8 @@ describe('actions', () => {
 	test('adding a todo from the taskList', () => {
 		jest.spyOn(TodoManager, 'addTaskToTodo').mockReturnValue(todoList);
 
+		const context = Symbol('context');
+
 		const result = addTaskToTodo(context);
 
 		expect(TodoManager.addTaskToTodo)
@@ -135,6 +156,8 @@ describe('actions', () => {
 
 	test('adding a task to the taskList', () => {
 		jest.spyOn(TaskManager, 'addTask').mockReturnValue(taskList);
+
+		const context = Symbol('context');
 
 		const result = addTask(context);
 

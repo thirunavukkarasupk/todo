@@ -23,12 +23,12 @@ describe('todoManager', () => {
 		id: Symbol('id'),
 		todo: Symbol('todo'),
 		completed: false,
-		mode: random.rndString(),
+		mode: 'edit-inactive',
 	}, {
 		id: Symbol('id'),
 		todo: Symbol('todo'),
 		completed: true,
-		mode: random.rndString(),
+		mode: 'edit-inactive',
 	}];
 
 	test('add todo to the todoList', () => {
@@ -289,8 +289,9 @@ describe('todoManager', () => {
 		const result = editTodo(context);
 
 		expect(result)
-			.toEqual([{ ...activeTodo, todo: context.state.input },
-				completedTodo]);
+			.toEqual([{ ...activeTodo,
+				todo: context.state.input, mode: 'edit-inactive' },
+			completedTodo]);
 	});
 
 	describe('is editing null', () => {
@@ -331,40 +332,18 @@ describe('todoManager', () => {
 				}]);
 	});
 
-	describe('getEditClassName', () => {
-		const id = random.rndString();
+	test('getEditMode', () => {
+		const id = Symbol('id');
+		const context = {
+			state: {
+				todoList: [{ ...activeTodo, id }, completedTodo],
+			},
+			data: { id },
+		};
 
-		test('when editing is not null', () => {
-			const context = {
-				state: {
-					editing: {
-						id,
-					},
-				},
-				data: {
-					id: id,
-					mode: Symbol('mode'),
-				},
-				config: { edit: [0, 1].map(() => random.rndString()) },
-			};
+		const result = getEditMode(context);
 
-			const result = getEditMode(context);
-
-			expect(result).toEqual(context.config.edit[1]);
-		});
-
-		test('when editing is null', () => {
-			const context = {
-				state: {
-					editing: null,
-				},
-				data: { mode: Symbol('mode') },
-				config: { edit: [0, 1].map(() => random.rndString()) },
-			};
-
-			const result = getEditMode(context);
-
-			expect(result).toEqual(context.data.mode);
-		});
+		expect(result).toEqual([{ ...context.state.todoList[0],
+			mode: 'edit-active' }, completedTodo]);
 	});
 });

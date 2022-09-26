@@ -1,11 +1,10 @@
 import React from 'react';
 import RemoveButton from './RemoveButton';
 import CheckBox from './CheckBox';
-import TodoManager from '../../services/TodoManager';
 
 const Todo = (context) => {
 	const { data, actions } = context;
-	const { todo, completed } = data;
+	const { todo, completed, mode } = data;
 
 	return (
 		<div
@@ -15,7 +14,7 @@ const Todo = (context) => {
 			<CheckBox { ...context }/>
 			<span
 				role="todoText"
-				className={ TodoManager.getEditMode(context) }
+				className={ mode }
 				onClick={ () => actions.setEditing(data) }
 			>{todo}</span>
 			<RemoveButton { ...context }/>

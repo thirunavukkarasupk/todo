@@ -7,7 +7,6 @@ const config = {
 	taskList: ['Debug the code', 'Write the code', 'Clean up'],
 	tickerDelay: milliSeconds * seconds,
 	taskMax: 8,
-	edit: ['edit-inactive', 'edit-active'],
 };
 
 export default config;

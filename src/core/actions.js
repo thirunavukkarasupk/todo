@@ -29,9 +29,10 @@ const clearButton = (context) => ({
 const filterButton = ({ data: filter }) => ({
 	filter,
 });
-const setEditing = ({ data }) => ({
-	input: data.todo,
-	editing: data,
+const setEditing = (context) => ({
+	input: context.data.todo,
+	editing: context.data,
+	todoList: TodoManager.getEditMode(context),
 });
 
 const editTodo = (context) => ({
